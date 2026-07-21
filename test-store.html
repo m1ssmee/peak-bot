@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PeakPals — PP Monogram Knit Sweater</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 0; color: #1d1d1d; }
+    header { padding: 18px 40px; border-bottom: 1px solid #eee; letter-spacing: .3em; font-size: 14px; }
+    main { display: flex; gap: 48px; padding: 48px 40px; max-width: 1000px; }
+    .shot { width: 380px; height: 500px; object-fit: cover; background: #efe7dd; }
+    h1 { font-size: 30px; margin: 0 0 8px; }
+    .price { font-size: 20px; color: #555; }
+    .sizes button { padding: 8px 14px; margin-right: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    .buy { margin-top: 24px; padding: 14px 28px; background: #1d1d1d; color: #fff; border: 0; cursor: pointer; letter-spacing: .1em; }
+    p { line-height: 1.6; color: #444; }
+  </style>
+</head>
+<body>
+  <header>PEAKPALS</header>
+  <main>
+    <img class="shot" src="http://localhost:3000/images/swt-001.jpeg" alt="PP Monogram Knit Sweater" />
+    <div>
+      <h1>PP Monogram Knit Sweater — Charcoal</h1>
+      <div class="price">₹1,899</div>
+      <p>Charcoal crewneck knit with a cream interlocking PP monogram across the chest. Ribbed collar, cuffs and hem.</p>
+      <div class="sizes"><button>S</button><button>M</button><button>L</button><button>XL</button></div>
+      <button class="buy">ADD TO BAG</button>
+    </div>
+  </main>
+
+  <!-- the entire integration -->
+  <script src="http://localhost:3000/embed.js" data-product-id="swt-001"></script>
+
+  <!-- optional: wire the widget's add-to-cart into your own cart -->
+  <script>
+    window.AIStylist = { onAddToCart: (product) => alert(`Added to bag: ${product.name}`) };
+  </script>
+</body>
+</html>

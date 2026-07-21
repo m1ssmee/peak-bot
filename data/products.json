@@ -1,0 +1,204 @@
+[
+  {
+    "id": "swt-001",
+    "name": "PP Monogram Knit Sweater — Charcoal",
+    "description": "Charcoal crewneck knit with a cream interlocking PP monogram across the chest. Ribbed collar, cuffs and hem.",
+    "price": 1899,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": 12,
+    "images": [
+      "/images/swt-001.jpeg"
+    ],
+    "url": "/products/pp-monogram-knit-sweater-charcoal",
+    "tags": {
+      "category": "sweater",
+      "colors": [
+        "charcoal",
+        "cream"
+      ],
+      "fabric": "wool-blend",
+      "fit": "regular",
+      "occasions": [
+        "casual",
+        "college",
+        "travel"
+      ],
+      "season": "winter",
+      "style_vibe": "classic",
+      "formality": "smart-casual",
+      "pairs_with": [
+        "jeans",
+        "chinos",
+        "sneakers",
+        "boots"
+      ]
+    }
+  },
+  {
+    "id": "swt-002",
+    "name": "PeakPals Horse Knit Sweater — Espresso",
+    "description": "Marled espresso-brown crewneck knit with the cream PeakPals wordmark and leaping-horse graphic.",
+    "price": 1899,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": 8,
+    "images": [
+      "/images/swt-002.jpeg"
+    ],
+    "url": "/products/peakpals-horse-knit-sweater-espresso",
+    "tags": {
+      "category": "sweater",
+      "colors": [
+        "brown",
+        "cream"
+      ],
+      "fabric": "wool-blend",
+      "fit": "regular",
+      "occasions": [
+        "casual",
+        "college",
+        "travel"
+      ],
+      "season": "winter",
+      "style_vibe": "classic",
+      "formality": "casual",
+      "pairs_with": [
+        "jeans",
+        "sneakers",
+        "boots",
+        "cargos"
+      ]
+    }
+  },
+  {
+    "id": "swt-003",
+    "name": "PeakPals Crest Knit Sweater — Blush",
+    "description": "Textured blush-pink crewneck knit with the cream PeakPals horse crest and laurel detail.",
+    "price": 1999,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "stock": 15,
+    "images": [
+      "/images/swt-003.jpeg"
+    ],
+    "url": "/products/peakpals-crest-knit-sweater-blush",
+    "tags": {
+      "category": "sweater",
+      "colors": [
+        "pink",
+        "cream"
+      ],
+      "fabric": "wool-blend",
+      "fit": "regular",
+      "occasions": [
+        "casual",
+        "college",
+        "travel"
+      ],
+      "season": "winter",
+      "style_vibe": "classic",
+      "formality": "casual",
+      "pairs_with": [
+        "jeans",
+        "skirt",
+        "sneakers",
+        "boots",
+        "tote-bag"
+      ]
+    }
+  },
+  {
+    "id": "tnk-001",
+    "name": "PeakPals Ribbed Tank — Black",
+    "description": "Black ribbed sleeveless tank with a fitted body, scoop neck and a small white PeakPals wordmark.",
+    "price": 899,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "stock": 20,
+    "images": [
+      "/images/tnk-001.jpeg"
+    ],
+    "url": "/products/peakpals-ribbed-tank-black",
+    "tags": {
+      "category": "tank",
+      "colors": [
+        "black"
+      ],
+      "fabric": "rib-knit",
+      "fit": "slim",
+      "occasions": [
+        "casual",
+        "college",
+        "travel",
+        "lounge"
+      ],
+      "season": "summer",
+      "style_vibe": "streetwear",
+      "formality": "casual",
+      "pairs_with": [
+        "jeans",
+        "shorts",
+        "cargos",
+        "sneakers",
+        "jacket",
+        "overshirt"
+      ]
+    }
+  },
+  {
+    "id": "tsh-001",
+    "name": "Strawberry Back-Print Tee — Navy",
+    "description": "Oversized navy tee with an arched PeakPals logo and halftone strawberry printed across the back.",
+    "price": 1099,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": 18,
+    "images": [
+      "/images/tsh-001.jpeg"
+    ],
+    "url": "/products/strawberry-back-print-tee-navy",
+    "tags": {
+      "category": "tshirt",
+      "colors": [
+        "navy"
+      ],
+      "fabric": "cotton",
+      "fit": "oversized",
+      "occasions": [
+        "casual",
+        "college",
+        "travel",
+        "lounge"
+      ],
+      "season": "all-season",
+      "style_vibe": "streetwear",
+      "formality": "casual",
+      "pairs_with": [
+        "jeans",
+        "shorts",
+        "cargos",
+        "sneakers",
+        "cap"
+      ]
+    }
+  }
+]
