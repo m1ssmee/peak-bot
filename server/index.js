@@ -68,8 +68,11 @@ const demoBlocked = isDemo && process.env.NODE_ENV === 'production' && process.e
 
 app.post('/api/chat', cors(corsOpts), perMinute, perDay, async (req, res) => {
   // Serverless can't refuse to boot — a dead process just 500s every request opaquely.
-  // Refuse the request instead, with the reason in the body.
-  if (demoBlocked) return res.status(503).json({ error: 'Store is running on demo data. Set ALLOW_DEMO_DATA=true to allow it, or replace data/store-info.md with real policies.' });
+  // Refuse the request instead. The shopper gets a human sentence; the reason goes to the log.
+  if (demoBlocked) {
+    console.error('BLOCKED: demo store data in production without ALLOW_DEMO_DATA=true. Replace data/store-info.md with real policies, or set the flag. See LAUNCH.md.');
+    return res.status(503).json({ reply: 'Pal is taking a quick break — back soon!' });
+  }
 
   const { messages, currentProductId } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) return res.status(400).json({ error: 'messages required' });
