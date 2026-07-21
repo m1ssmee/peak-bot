@@ -22,6 +22,13 @@ Nothing here is optional. Every unchecked box is something a real customer can b
 - [ ] **Spend cap enabled at the provider.** Chat is unmetered per conversation beyond the rate
       limits (15/min, 100/day per IP) — those cap requests, not tokens. Set a hard monthly cap in
       the Google AI Studio / Anthropic / OpenAI console for whichever provider `.env` points at.
+      **On serverless this is the only real ceiling** — see the next box.
+
+- [ ] **Rate limits moved to a shared store.** `express-rate-limit` counts in memory. On Vercel
+      every warm instance keeps its own counters, so "100/day per IP" is really "100/day per IP
+      *per instance*", and Vercel scales instances out under load. A determined caller gets past
+      it. Swap `MemoryStore` for Upstash Redis / Vercel KV before this is public, or accept that
+      the provider spend cap is your actual limit.
 
 - [ ] **Widget console fallback removed** — [widget/index.jsx:70](widget/index.jsx#L70) logs to
       `console.log` when the host page hasn't set `window.AIStylist.onAddToCart`. Kept

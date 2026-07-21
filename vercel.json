@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "server/public",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{data/**,test-store.html}"
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index.js" }]
+}

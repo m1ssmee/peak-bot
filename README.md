@@ -103,6 +103,20 @@ progress plus a running cost estimate (rates are two consts at the top of `enric
 All five catalogue products currently ship untagged, so the first `npm run enrich` tags the
 whole store. Until it runs, `search_products` matches nothing and Pal has nothing to show.
 
+## Deploying (Vercel)
+
+`api/index.js` exports the Express app as a serverless function; `vercel.json` rewrites every
+route to it, so production and local run the exact same code. `npm start` still runs a normal
+long-lived server — `server/index.js` only calls `listen()` when it is the entry point.
+
+Two things genuinely differ under serverless, both handled:
+
+- **Rate limits are per-instance.** In-memory counters don't survive across instances. See
+  [LAUNCH.md](LAUNCH.md) — the provider spend cap is the real ceiling until you add a shared store.
+- **Nothing can "refuse to boot".** Locally, demo data + `NODE_ENV=production` without
+  `ALLOW_DEMO_DATA=true` exits the process. Serverless has no boot to fail, so `/api/chat`
+  returns a 503 explaining why instead of crashing opaquely.
+
 ## Swapping in Shopify later
 
 Everything reads the catalogue through [server/catalog.js](server/catalog.js), which exports

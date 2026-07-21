@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { generateText, tool, stepCountIs } from 'ai';
 import { z } from 'zod';
 import { model } from './llm.js';
@@ -56,10 +56,21 @@ const tools = {
   }),
 };
 
+// ponytail: in-memory counters. On a long-running server these are the real limits.
+// On serverless each instance keeps its OWN counters, so the effective limit is
+// (limit x live instances) — it stops one impatient user, not a determined one.
+// Upgrade path when that matters: a shared store (Upstash Redis / Vercel KV).
 const perMinute = rateLimit({ windowMs: 60_000, limit: 15, message: { error: 'Slow down a moment — try again in a minute.' } });
 const perDay = rateLimit({ windowMs: 24 * 60 * 60_000, limit: 100, message: { error: 'Daily limit reached. Back tomorrow!' } });
 
+// Demo policies are fine locally; serving them as fact to real customers needs an opt-in.
+const demoBlocked = isDemo && process.env.NODE_ENV === 'production' && process.env.ALLOW_DEMO_DATA !== 'true';
+
 app.post('/api/chat', cors(corsOpts), perMinute, perDay, async (req, res) => {
+  // Serverless can't refuse to boot — a dead process just 500s every request opaquely.
+  // Refuse the request instead, with the reason in the body.
+  if (demoBlocked) return res.status(503).json({ error: 'Store is running on demo data. Set ALLOW_DEMO_DATA=true to allow it, or replace data/store-info.md with real policies.' });
+
   const { messages, currentProductId } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) return res.status(400).json({ error: 'messages required' });
 
@@ -108,14 +119,21 @@ app.use(express.static(fileURLToPath(new URL('./public', import.meta.url))));
 const IMAGES = fileURLToPath(new URL('../data/images/', import.meta.url));
 app.use('/images', express.static(IMAGES), (req, res) => res.sendFile(IMAGES + 'placeholder.svg'));
 
-// Demo policies are fine locally; shipping them to real customers needs an explicit opt-in.
-if (isDemo && process.env.NODE_ENV === 'production' && process.env.ALLOW_DEMO_DATA !== 'true') {
-  console.error('\n' + DEMO_WARNING + '\n   Refusing to start in production. Set ALLOW_DEMO_DATA=true to override.\n');
-  process.exit(1);
+// Vercel imports this module and calls the app directly; only `npm start` should listen.
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (isMain) {
+  if (demoBlocked) {
+    console.error('\n' + DEMO_WARNING + '\n   Refusing to start in production. Set ALLOW_DEMO_DATA=true to override.\n');
+    process.exit(1);
+  }
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`stylist on http://localhost:${port}  (embed: /embed.js)`);
+    if (isDemo) console.warn('\n' + DEMO_WARNING + '\n');
+  });
+} else if (isDemo) {
+  console.warn(DEMO_WARNING);
 }
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`stylist on http://localhost:${port}  (embed: /embed.js)`);
-  if (isDemo) console.warn('\n' + DEMO_WARNING + '\n');
-});
+export default app;
