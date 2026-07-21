@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node --watch server/index.js",
     "start": "node server/index.js",
-    "build": "vite build",
+    "build": "vite build && BUILD_ASK=1 vite build",
     "enrich": "node scripts/enrich.js"
   },
   "dependencies": {

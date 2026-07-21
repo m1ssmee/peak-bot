@@ -1,15 +1,39 @@
 # AI Shopping Stylist — "Pal"
 
-A floating chat stylist for PeakPals, a casual western-wear store. One `<script>` tag on any page,
-one Express backend, provider-agnostic LLM.
+An AI stylist for PeakPals, a casual western-wear store. Page-first: the primary surface is
+**`/ask`**, a full-page chat that lives inside the store's own header and nav. The same chat also
+builds as a floating widget (`embed.js`) for embedding on third-party sites.
 
 ```
-server/     Express app — chat API, catalog, llm, tag vocabulary
-widget/     Preact source → builds to server/public/embed.js (single file)
-data/       products.json + images/
+server/     Express app — chat API, catalog, llm, tag vocabulary, ask.html
+  public/   store.css (shared chrome) + built bundles
+widget/     Preact source
+  chat.jsx    shared conversation logic, cards, composer, styles
+  ask.jsx     → server/public/ask.js    (the /ask page)
+  index.jsx   → server/public/embed.js  (the floating widget)
+data/       products.json + images/ + store-info.md
 scripts/    enrich.js (image → tags), test.js
-test-store.html   fake product page showing the embed
+test-store.html   demo product page
 ```
+
+## Pages
+
+| Route | What it is |
+|---|---|
+| `/` | The shop (demo product page) |
+| `/ask` | Full-page chat, reached from the nav |
+| `/ask?product=<id>` | Same, with that product preloaded as context |
+| `/embed.js` | The floating widget bundle, for other sites |
+
+`/ask` is a *section of the store*, not a standalone app: it links `/store.css` and repeats the
+same header markup, so the fonts, nav and brand match the shop. Only the area below the header is
+chat. `data-product-id` on the widget and `?product=` on the page feed the same
+`currentProductId` field.
+
+Both surfaces import [widget/chat.jsx](widget/chat.jsx) — one conversation implementation, two
+shells. They build as two separate self-contained IIFE bundles, so the shared code is duplicated
+*in the output* (~8 kB each); that is the price of the widget staying dependency-free on a host
+page.
 
 ## Setup
 
@@ -48,12 +72,23 @@ Current model IDs:
 | OpenAI    | https://platform.openai.com/docs/models |
 | Google    | https://ai.google.dev/gemini-api/docs/models |
 
-## The embed snippet
+## Linking to the chat (this store)
+
+```html
+<a href="/ask">Ask Pal</a>
+<a href="/ask?product=swt-001">Ask Pal about this item</a>
+```
+
+That's the whole integration for pages on the same origin. The demo store does exactly this —
+an "Ask Pal" nav item and a button on the product page.
+
+## The embed snippet (other sites)
 
 ```html
 <script src="https://your-server.com/embed.js" data-product-id="swt-001"></script>
 ```
 
+For a storefront you don't control, or where you want chat without a page navigation.
 `data-product-id` is optional — when present it's sent as `currentProductId` so Pal
 knows which product page the shopper is on. The widget derives the API URL from its own
 `src`, renders inside a **shadow root** (host CSS can't reach it, its CSS can't leak), and

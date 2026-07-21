@@ -4,20 +4,32 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PeakPals — PP Monogram Knit Sweater</title>
+  <link rel="stylesheet" href="/store.css" />
   <style>
-    body { font-family: Georgia, serif; margin: 0; color: #1d1d1d; }
-    header { padding: 18px 40px; border-bottom: 1px solid #eee; letter-spacing: .3em; font-size: 14px; }
     main { display: flex; gap: 48px; padding: 48px 40px; max-width: 1000px; }
     .shot { width: 380px; height: 500px; object-fit: cover; background: #efe7dd; }
     h1 { font-size: 30px; margin: 0 0 8px; }
     .price { font-size: 20px; color: #555; }
-    .sizes button { padding: 8px 14px; margin-right: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
-    .buy { margin-top: 24px; padding: 14px 28px; background: #1d1d1d; color: #fff; border: 0; cursor: pointer; letter-spacing: .1em; }
     p { line-height: 1.6; color: #444; }
+    .sizes button { padding: 8px 14px; margin-right: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-family: inherit; }
+    .buy { margin-top: 24px; padding: 14px 28px; background: #1d1d1d; color: #fff; border: 0; cursor: pointer;
+      letter-spacing: .1em; font-family: system-ui, sans-serif; font-size: 13px; }
+    .ask { display: inline-block; margin-top: 12px; padding: 13px 24px; background: #fff; color: #7a2f3a;
+      border: 1px solid #7a2f3a; text-decoration: none; font-family: system-ui, sans-serif; font-size: 14px;
+      font-weight: 600; }
+    @media (max-width: 720px) {
+      main { flex-direction: column; gap: 24px; padding: 24px 20px; }
+      .shot { width: 100%; height: auto; }
+      .buy, .ask { display: block; width: 100%; text-align: center; box-sizing: border-box; }
+    }
   </style>
 </head>
 <body>
-  <header>PEAKPALS</header>
+  <header class="store-header">
+    <a class="store-brand" href="/">PEAKPALS</a>
+    <nav class="store-nav"><a href="/ask">✦ Ask Pal</a></nav>
+  </header>
+
   <main>
     <img class="shot" src="/images/swt-001.jpeg" alt="PP Monogram Knit Sweater" />
     <div>
@@ -26,16 +38,12 @@
       <p>Charcoal crewneck knit with a cream interlocking PP monogram across the chest. Ribbed collar, cuffs and hem.</p>
       <div class="sizes"><button>S</button><button>M</button><button>L</button><button>XL</button></div>
       <button class="buy">ADD TO BAG</button>
+      <a class="ask" href="/ask?product=swt-001">Ask Pal about this item</a>
     </div>
   </main>
 
-  <!-- the entire integration. Relative src works on any origin the app is served from;
-       an external host site uses the absolute URL instead — see README. -->
-  <script src="/embed.js" data-product-id="swt-001"></script>
-
-  <!-- optional: wire the widget's add-to-cart into your own cart -->
-  <script>
-    window.AIStylist = { onAddToCart: (product) => alert(`Added to bag: ${product.name}`) };
-  </script>
+  <!-- The floating widget still builds and is still embeddable on third-party sites
+       (see README). This store links to /ask instead:
+       <script src="/embed.js" data-product-id="swt-001"></script> -->
 </body>
 </html>

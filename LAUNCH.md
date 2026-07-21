@@ -30,10 +30,15 @@ Nothing here is optional. Every unchecked box is something a real customer can b
       it. Swap `MemoryStore` for Upstash Redis / Vercel KV before this is public, or accept that
       the provider spend cap is your actual limit.
 
-- [ ] **Widget console fallback removed** — [widget/index.jsx:70](widget/index.jsx#L70) logs to
-      `console.log` when the host page hasn't set `window.AIStylist.onAddToCart`. Kept
-      deliberately for demo. On a live store, add-to-cart must be wired to the real cart or the
-      button silently does nothing.
+- [ ] **Add-to-cart console fallback removed** — [widget/chat.jsx](widget/chat.jsx) logs to
+      `console.log` when nothing has set `window.AIStylist.onAddToCart`. Kept deliberately for
+      demo. This now affects **both** surfaces: on `/ask` no host page sets that callback at all,
+      so every Add to cart is currently a no-op. Wire it to the real cart, or drop the button
+      from the cards and leave only "View".
+
+- [ ] **Product URLs are real.** Cards link to `/products/<slug>`, which 404s — those pages don't
+      exist in this demo. On `/ask` this is more visible than it was in the widget, because the
+      chat is a full page shoppers arrive at deliberately.
 
 - [ ] **50-query gauntlet re-run after the final prompt edits.** Any change to the system prompt,
       the persona, or `store-info.md` changes behaviour across the board — including refusals and
