@@ -44,6 +44,14 @@ Nothing here is optional. Every unchecked box is something a real customer can b
       the persona, or `store-info.md` changes behaviour across the board — including refusals and
       off-topic redirects. Re-run it against the final wording, not an earlier draft.
 
+- [ ] **Provider billing enabled — this currently blocks everything.** The Google free tier allows
+      **20 requests per day** for `gemini-3.5-flash` (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`),
+      and some models are provisioned at 0. Twenty requests is a handful of conversations, so the
+      live store stops answering almost immediately. Either enable billing on the Google Cloud
+      project, or switch `LLM_PROVIDER`/`LLM_MODEL` to a provider with a real allowance. Quota
+      exhaustion now returns 429 with "Pal's had a lot of questions today" and logs
+      `LLM provider quota exhausted` — if the store goes quiet, check the logs for that line first.
+
 ## Also worth checking
 
 - `.env` is gitignored and the production key is not the one used in development.

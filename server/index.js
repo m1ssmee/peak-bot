@@ -107,8 +107,18 @@ app.post('/api/chat', cors(corsOpts), perMinute, perDay, async (req, res) => {
 
     res.json({ reply: result.text, products: [...seen.values()].slice(0, 4) });
   } catch (err) {
-    console.error('chat failed:', err);
-    res.status(500).json({ error: 'Something went wrong on our side. Try again?' });
+    // Provider quota/rate limits are an operational problem, not a bug — say so in the log,
+    // and give the shopper something truthful rather than "something went wrong".
+    const quota = /RESOURCE_EXHAUSTED|exceeded your current quota|rate limit|429/i.test(
+      `${err?.message} ${err?.lastError?.message ?? ''}`
+    );
+    if (quota) console.error('chat failed: LLM provider quota exhausted — check plan/billing for', process.env.LLM_PROVIDER, process.env.LLM_MODEL);
+    else console.error('chat failed:', err);
+    res.status(quota ? 429 : 500).json({
+      reply: quota
+        ? "Pal's had a lot of questions today — give it a minute and try again."
+        : 'Something went wrong on our side. Try again?',
+    });
   }
 });
 
