@@ -20,8 +20,8 @@ npm run build             # builds widget → server/public/embed.js
 npm start                 # http://localhost:3000
 ```
 
-Then open `test-store.html` in a browser (any static server, or straight off disk — the
-widget calls `localhost:3000`, which is already in the default `CORS_ORIGINS`).
+Then open <http://localhost:3000> — the server serves `test-store.html` at the root, so you
+get the demo storefront with the widget already on it.
 
 `npm run dev` restarts the server on change. `node scripts/test.js` checks the catalogue
 filters and that every tag in `products.json` is in-vocabulary.
@@ -51,7 +51,7 @@ Current model IDs:
 ## The embed snippet
 
 ```html
-<script src="https://your-server.com/embed.js" data-product-id="p4"></script>
+<script src="https://your-server.com/embed.js" data-product-id="swt-001"></script>
 ```
 
 `data-product-id` is optional — when present it's sent as `currentProductId` so Pal

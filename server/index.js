@@ -98,6 +98,9 @@ app.post('/api/chat', cors(corsOpts), perMinute, perDay, async (req, res) => {
   }
 });
 
+// The demo storefront, so hitting the root shows the widget in context.
+app.get('/', (req, res) => res.sendFile(fileURLToPath(new URL('../test-store.html', import.meta.url))));
+
 // Built widget + any static assets.
 app.use(express.static(fileURLToPath(new URL('./public', import.meta.url))));
 

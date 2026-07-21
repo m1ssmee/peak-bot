@@ -19,7 +19,7 @@
 <body>
   <header>PEAKPALS</header>
   <main>
-    <img class="shot" src="http://localhost:3000/images/swt-001.jpeg" alt="PP Monogram Knit Sweater" />
+    <img class="shot" src="/images/swt-001.jpeg" alt="PP Monogram Knit Sweater" />
     <div>
       <h1>PP Monogram Knit Sweater — Charcoal</h1>
       <div class="price">₹1,899</div>
@@ -29,8 +29,9 @@
     </div>
   </main>
 
-  <!-- the entire integration -->
-  <script src="http://localhost:3000/embed.js" data-product-id="swt-001"></script>
+  <!-- the entire integration. Relative src works on any origin the app is served from;
+       an external host site uses the absolute URL instead — see README. -->
+  <script src="/embed.js" data-product-id="swt-001"></script>
 
   <!-- optional: wire the widget's add-to-cart into your own cart -->
   <script>
