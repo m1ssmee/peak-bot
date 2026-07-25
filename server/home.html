@@ -40,7 +40,7 @@
     }
     .hero .sub { font-family: var(--font-body); font-weight: 300; font-size: var(--fs-body); margin: 0 0 34px; }
 
-    /* AI search pill */
+    /* AI search pill — the shared element that morphs into the /ask composer */
     .hero-search {
       display: flex;
       align-items: center;
@@ -51,7 +51,11 @@
       border-radius: var(--radius-pill);
       padding: 8px 8px 8px 26px;
       backdrop-filter: blur(2px);
+      view-transition-name: chat-input;
+      transition: transform .28s cubic-bezier(.2, .7, .2, 1);
     }
+    .hero-search:active { transform: scale(.99); }         /* tactile on tap + click */
+    .hero-search.is-sending { transform: scale(.985); }    /* gentle press on submit */
     .hero-search .person { height: 24px; width: 24px; flex: none; filter: brightness(0) invert(1); opacity: .95; }
     .hero-search input {
       flex: 1;
@@ -66,6 +70,7 @@
     }
     .hero-search input::placeholder { color: #fff; opacity: 1; }
     .hero-search button {
+      position: relative;
       flex: none;
       width: 53px;
       height: 53px;
@@ -79,6 +84,25 @@
     }
     .hero-search button:hover { background: rgba(255, 255, 255, 0.5); }
     .hero-search button img { width: 26px; height: 21px; }
+    /* arrow slips away, a soft dot breathes in its place — no spinner */
+    .send-arrow { transition: opacity .2s ease, transform .2s cubic-bezier(.2, .7, .2, 1); }
+    .send-load {
+      position: absolute; inset: 0; margin: auto; width: 9px; height: 9px; border-radius: 50%;
+      background: var(--c-white); opacity: 0; transform: scale(.6);
+    }
+    .is-sending .send-arrow { opacity: 0; transform: translateX(7px); }
+    .is-sending .send-load { opacity: 1; animation: pal-breathe .9s ease-in-out infinite; }
+    @keyframes pal-breathe { 0%, 100% { transform: scale(.6); opacity: .5; } 50% { transform: scale(1); opacity: 1; } }
+
+    /* cross-document transition: root crossfade + the bar morphing into the composer */
+    @view-transition { navigation: auto; }
+    ::view-transition-group(chat-input) { animation-duration: 340ms; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+    ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 240ms; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-search, .hero-search.is-sending, .send-arrow, .send-load { transition: none !important; animation: none !important; transform: none !important; }
+      ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 1ms !important; }
+    }
 
     /* section scaffolding */
     section { padding-top: 68px; }
@@ -132,7 +156,8 @@
       <img class="person" src="/images/site/icon-person.png" alt="" />
       <input name="q" placeholder="Build my performance wardrobe" aria-label="Describe what you want" />
       <button type="submit" aria-label="Ask Pal">
-        <img src="/images/site/icon-arrow-white.svg" alt="" />
+        <img class="send-arrow" src="/images/site/icon-arrow-white.svg" alt="" />
+        <span class="send-load" aria-hidden="true"></span>
       </button>
     </form>
   </section>
@@ -180,5 +205,17 @@
     </div>
     <div class="store-rights">All rights reserved</div>
   </footer>
+
+  <script>
+    // Immediate press/loading feedback on submit. We do NOT preventDefault —
+    // the form's GET navigation to /ask?q=... proceeds, and where the browser
+    // supports cross-document View Transitions the bar morphs into the composer.
+    // The class is added synchronously, so the outgoing transition snapshot
+    // captures the sending state.
+    (function () {
+      var bar = document.querySelector('.hero-search');
+      if (bar) bar.addEventListener('submit', function () { bar.classList.add('is-sending'); });
+    })();
+  </script>
 </body>
 </html>

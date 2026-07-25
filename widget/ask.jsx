@@ -40,6 +40,19 @@ body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; 
   .hero { padding-top: 3vh; }
   .hero h2 { font-size: 28px; }
 }
+
+/* Arrival: each message slides up as it's sent; the typing indicator fades in
+   just after, so a seeded query reads as "message sent → Pal starts typing". */
+@media (prefers-reduced-motion: no-preference) {
+  .pal-msg { animation: pal-msg-in .32s cubic-bezier(.2, .7, .2, 1) both; }
+  .pal-dots { animation: pal-fade-in .3s ease .14s both; }
+  .hero { animation: pal-fade-in .3s ease both; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pal-msg { animation: pal-fade-in .18s ease both; }
+}
+@keyframes pal-msg-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pal-fade-in { from { opacity: 0; } to { opacity: 1; } }
 ` + sharedCss;
 
 function Ask() {
