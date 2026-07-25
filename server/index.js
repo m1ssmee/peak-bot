@@ -122,10 +122,13 @@ app.post('/api/chat', cors(corsOpts), perMinute, perDay, async (req, res) => {
   }
 });
 
-// The demo storefront.
-app.get('/', (req, res) => res.sendFile(fileURLToPath(new URL('../test-store.html', import.meta.url))));
+// Storefront home (Figma design). Hero search seeds /ask.
+app.get('/', (req, res) => res.sendFile(fileURLToPath(new URL('./home.html', import.meta.url))));
 
-// The full-page chat. /ask?product=<id> preloads that product as context.
+// Single product page.
+app.get('/product', (req, res) => res.sendFile(fileURLToPath(new URL('../test-store.html', import.meta.url))));
+
+// The full-page chat. /ask?product=<id> preloads a product; /ask?q=<text> seeds the first message.
 app.get('/ask', (req, res) => res.sendFile(fileURLToPath(new URL('./ask.html', import.meta.url))));
 
 // Built widget + any static assets.

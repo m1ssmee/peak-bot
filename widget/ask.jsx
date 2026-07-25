@@ -1,57 +1,56 @@
-// The /ask section: full-page chat living *below* the shared store header in ask.html.
+// The /ask section: full-page chat below the shared store header in ask.html.
 // Same conversation logic as the embeddable widget — see chat.jsx.
 import { render } from 'preact';
+import { useEffect, useRef } from 'preact/hooks';
 import { useChat, Messages, Composer, sharedCss, STARTERS } from './chat.jsx';
 
-// Same origin, so the API needs no prefix.
-const PRODUCT_ID = new URLSearchParams(location.search).get('product');
-
-const UI_FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif';
+const params = new URLSearchParams(location.search);
+const PRODUCT_ID = params.get('product');
+const SEED = (params.get('q') || '').trim(); // from the home hero search
 
 const pageCss = `
-* { box-sizing: border-box; }
 html { height: 100%; }
-/* header stays put, the chat fills whatever is left */
-body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; background: #faf7f4; }
-.store-header { flex: none; }
+/* header stays put, the chat fills the rest */
+body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; background: var(--c-bg); }
+.store-header { flex: none; border-bottom: 1px solid var(--c-line); }
 #app { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 
 .scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-.col { max-width: 720px; margin: 0 auto; padding: 28px 20px 8px; }
+.col { max-width: 760px; margin: 0 auto; padding: 32px 24px 8px; }
 
-.hero { padding: 4vh 0 0; }
-.hero h2 { margin: 0 0 8px; font-size: 28px; font-weight: normal; line-height: 1.25; }
-.hero p { margin: 0 0 24px; color: #6b6b6b; font-size: 16px; line-height: 1.6; }
+.hero { padding: 6vh 0 0; }
+.hero h2 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1.2; color: var(--c-text); }
+.hero p { margin: 0 0 26px; color: var(--c-muted); font-size: 17px; line-height: 1.6; }
 .starters { display: flex; flex-direction: column; gap: 10px; }
-.starters button { text-align: left; padding: 15px 18px; border: 1px solid #e4dad0; background: #fff;
-  color: #1d1d1d; font-size: 16px; line-height: 1.4; cursor: pointer; font-family: inherit; }
-.starters button:hover { border-color: #7a2f3a; }
+.starters button { text-align: left; padding: 16px 18px; border: 1px solid var(--c-search-border); background: var(--c-white);
+  color: var(--c-text); font-size: 16px; line-height: 1.4; cursor: pointer; font-family: var(--font-body); transition: border-color .15s; }
+.starters button:hover { border-color: var(--c-ink); }
 
-.ctx { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 20px; padding: 7px 14px 7px 7px;
-  background: #fff; border: 1px solid #ece5de; border-radius: 999px; font-size: 13px; color: #6b6b6b;
-  font-family: ${UI_FONT}; }
-.ctx img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.ctx { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 7px 15px 7px 7px;
+  background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 999px; font-size: 13px; color: var(--c-text); font-family: var(--font-body); }
+.ctx img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
 
-.bottom { flex: none; border-top: 1px solid #ece5de; background: #fff; padding-bottom: env(safe-area-inset-bottom); }
-.bottom-in { max-width: 720px; margin: 0 auto; padding: 12px 20px; }
-.note { max-width: 720px; margin: 0 auto; padding: 0 20px 10px; font-size: 11px; color: #a99; text-align: center;
-  font-family: ${UI_FONT}; }
-
-/* Messages inherit the store's serif; controls match the store's sans-serif nav and buttons. */
-.pal-chips button, .pal-form input, .pal-form button,
-.pal-card-acts a, .pal-card-acts button { font-family: ${UI_FONT}; }
+.bottom { flex: none; border-top: 1px solid var(--c-line); background: var(--c-white); padding-bottom: env(safe-area-inset-bottom); }
+.bottom-in { max-width: 760px; margin: 0 auto; padding: 14px 24px; }
+.note { max-width: 760px; margin: 0 auto; padding: 0 24px 12px; font-size: 11px; color: var(--c-muted); text-align: center; font-family: var(--font-body); }
 
 @media (max-width: 560px) {
-  .col { padding: 20px 16px 8px; }
+  .col { padding: 22px 16px 8px; }
   .bottom-in { padding-left: 16px; padding-right: 16px; }
-  .hero { padding-top: 2vh; }
-  .hero h2 { font-size: 23px; }
-  .hero p { font-size: 15px; }
+  .hero { padding-top: 3vh; }
+  .hero h2 { font-size: 28px; }
 }
 ` + sharedCss;
 
 function Ask() {
   const { turns, busy, send } = useChat({ productId: PRODUCT_ID });
+  const seeded = useRef(false);
+
+  // A query handed over from the home hero search becomes the first message.
+  useEffect(() => {
+    if (SEED && !seeded.current) { seeded.current = true; send(SEED); }
+  }, []);
+
   const empty = turns.length === 0;
 
   return (

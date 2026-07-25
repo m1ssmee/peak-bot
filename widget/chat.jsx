@@ -118,35 +118,38 @@ export function Composer({ busy, onSend, placeholder = "What's the occasion?" })
 }
 
 // Styles for the shared pieces. Each shell adds its own layout on top.
-// Prefixed so they stay inert if a host page ever loads them outside a shadow root.
+// Values reference the design tokens (var(--c-*) from tokens.css on the /ask page);
+// the widget shell redeclares those tokens inside :host, and the fallbacks here keep
+// it correct on a third-party host that never loads tokens.css. Prefixed so nothing
+// leaks or collides.
 export const sharedCss = `
-.pal-msg { max-width: 85%; padding: 10px 13px; border-radius: 14px; font-size: 15px; line-height: 1.5;
-  white-space: pre-wrap; margin-bottom: 10px; }
-.pal-user { margin-left: auto; background: #7a2f3a; color: #fff; border-bottom-right-radius: 4px; }
-.pal-bot { margin-right: auto; background: #fff; border: 1px solid #ece5de; border-bottom-left-radius: 4px; }
-.pal-cards { display: flex; flex-direction: column; gap: 8px; margin: 0 0 12px; }
-.pal-card { display: flex; gap: 12px; background: #fff; border: 1px solid #ece5de; border-radius: 12px; padding: 10px; }
-.pal-card img { width: 72px; height: 94px; object-fit: cover; border-radius: 8px; background: #efe7dd; flex: none; }
+.pal-msg { max-width: 85%; padding: 11px 14px; border-radius: 14px; font-size: 15px; line-height: 1.5;
+  white-space: pre-wrap; margin-bottom: 10px; font-family: var(--font-body, system-ui, sans-serif); }
+.pal-user { margin-left: auto; background: var(--c-text, #333); color: var(--c-white, #fff); border-bottom-right-radius: 4px; }
+.pal-bot { margin-right: auto; background: var(--c-white, #fff); border: 1px solid var(--c-search-border, #d4d4d4); border-bottom-left-radius: 4px; }
+.pal-cards { display: flex; flex-direction: column; gap: 10px; margin: 0 0 12px; }
+.pal-card { display: flex; gap: 12px; background: var(--c-white, #fff); border: 1px solid var(--c-search-border, #d4d4d4); padding: 10px; }
+.pal-card img { width: 72px; height: 94px; object-fit: cover; background: var(--c-surface, #f7f7f7); flex: none; }
 .pal-card-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.pal-card-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
-.pal-card-price { font-size: 14px; color: #555; }
+.pal-card-name { font-family: var(--font-display, Georgia, serif); font-size: 16px; line-height: 1.3; color: var(--c-text, #333); }
+.pal-card-price { font-family: var(--font-display, Georgia, serif); font-size: 14px; color: var(--c-text, #333); }
 .pal-card-oos { font-size: 12px; color: #a33; }
 .pal-card-acts { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; }
-.pal-card-acts a, .pal-card-acts button { font-size: 12px; padding: 7px 12px; border-radius: 8px; cursor: pointer;
-  border: 1px solid #7a2f3a; background: #fff; color: #7a2f3a; text-decoration: none; font-weight: 600;
-  font-family: inherit; }
-.pal-card-acts button.pal-primary { background: #7a2f3a; color: #fff; }
+.pal-card-acts a, .pal-card-acts button { font-size: 12px; padding: 8px 13px; cursor: pointer;
+  border: 1px solid var(--c-ink, #000); background: var(--c-white, #fff); color: var(--c-ink, #000); text-decoration: none;
+  font-weight: 500; font-family: var(--font-body, system-ui, sans-serif); letter-spacing: .03em; }
+.pal-card-acts button.pal-primary { background: var(--c-ink, #000); color: var(--c-white, #fff); }
 .pal-card-acts button[disabled] { opacity: .45; cursor: not-allowed; }
 .pal-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-.pal-chips button { font-size: 13px; padding: 8px 14px; border-radius: 999px; border: 1px solid #d9cfc5;
-  background: #fff; color: #7a2f3a; cursor: pointer; font-family: inherit; }
-.pal-chips button:active { background: #f3ece6; }
-.pal-dots { color: #999; font-size: 14px; padding: 4px 2px 12px; }
+.pal-chips button { font-size: 13px; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--c-search-border, #d4d4d4);
+  background: var(--c-white, #fff); color: var(--c-ink, #000); cursor: pointer; font-family: var(--font-body, system-ui, sans-serif); }
+.pal-chips button:hover { background: var(--c-surface, #f7f7f7); }
+.pal-dots { color: var(--c-muted, #9f9f9f); font-size: 14px; padding: 4px 2px 12px; font-family: var(--font-body, system-ui, sans-serif); }
 .pal-form { display: flex; gap: 8px; }
-.pal-form input { flex: 1; border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; font-size: 16px;
-  outline: none; min-width: 0; font-family: inherit; background: #fff; color: #222; }
-.pal-form input:focus { border-color: #7a2f3a; }
-.pal-form button { border: 0; background: #7a2f3a; color: #fff; border-radius: 10px; padding: 0 18px;
-  cursor: pointer; font-size: 15px; font-weight: 600; font-family: inherit; }
+.pal-form input { flex: 1; border: 1px solid var(--c-search-border, #d4d4d4); border-radius: 999px; padding: 13px 18px;
+  font-size: 16px; outline: none; min-width: 0; font-family: var(--font-body, system-ui, sans-serif); background: var(--c-white, #fff); color: var(--c-text, #333); }
+.pal-form input:focus { border-color: var(--c-ink, #000); }
+.pal-form button { border: 0; background: var(--c-ink, #000); color: var(--c-white, #fff); border-radius: 999px; padding: 0 20px;
+  cursor: pointer; font-size: 15px; font-weight: 500; font-family: var(--font-body, system-ui, sans-serif); }
 .pal-form button[disabled] { opacity: .5; }
 `;

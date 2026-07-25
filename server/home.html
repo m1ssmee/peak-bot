@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>PeakPals — The smarter way to discover athleisure</title>
+  <link rel="stylesheet" href="/tokens.css" />
+  <style>
+    /* ---- home page, from the Figma "Assistant 6" frame ---- */
+    .hero {
+      position: relative;
+      /* definite height so the absolutely-positioned photo can fill it (height:100%
+         needs a definite parent height, which min-height does not provide) */
+      height: clamp(560px, 80vh, 780px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--c-white);
+      background: #333;
+    }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-shade { position: absolute; inset: 0; background: var(--overlay-hero); }
+    .hero > *:not(.hero-bg):not(.hero-shade) { position: relative; z-index: 1; }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--fs-hero);
+      line-height: 1.15;
+      margin: 0 0 18px;
+    }
+    .hero .sub { font-family: var(--font-body); font-weight: 300; font-size: var(--fs-body); margin: 0 0 34px; }
+
+    /* AI search pill */
+    .hero-search {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: min(881px, 100%);
+      background: var(--fill-search);
+      border: 3px solid var(--c-search-border);
+      border-radius: var(--radius-pill);
+      padding: 8px 8px 8px 26px;
+      backdrop-filter: blur(2px);
+    }
+    .hero-search .person { height: 24px; width: 24px; flex: none; filter: brightness(0) invert(1); opacity: .95; }
+    .hero-search input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      color: var(--c-white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: var(--fs-lg);
+      outline: none;
+    }
+    .hero-search input::placeholder { color: #fff; opacity: 1; }
+    .hero-search button {
+      flex: none;
+      width: 53px;
+      height: 53px;
+      border-radius: var(--radius-round);
+      border: 0;
+      background: var(--fill-search-btn);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background .15s;
+    }
+    .hero-search button:hover { background: rgba(255, 255, 255, 0.5); }
+    .hero-search button img { width: 26px; height: 21px; }
+
+    /* section scaffolding */
+    section { padding-top: 68px; }
+    .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 30px; }
+    .sec-head h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--fs-h2); color: var(--c-text); margin: 0; }
+    .discover-more { font-family: var(--font-display); font-size: var(--fs-md); color: var(--c-ink); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+    .discover-more img { width: 22px; height: 16px; }
+    .discover-more:hover { gap: 14px; }
+
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px; }
+
+    /* best sellers */
+    .prod .tile { background: var(--c-surface); aspect-ratio: 408 / 565; display: grid; place-items: center; overflow: hidden; }
+    .prod .tile img { width: 78%; height: 78%; object-fit: contain; mix-blend-mode: multiply; }
+    .prod .name { font-family: var(--font-display); font-size: var(--fs-lg); color: var(--c-text); margin: 16px 0 2px; }
+    .prod .price { font-family: var(--font-display); font-size: var(--fs-lg); color: var(--c-text); }
+
+    /* collections */
+    .col-tile { position: relative; aspect-ratio: 410 / 552; overflow: hidden; display: block; text-decoration: none; }
+    .col-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .col-tile::after { content: ''; position: absolute; inset: 0; background: var(--overlay-tile); }
+    .col-tile span { position: absolute; left: 28px; bottom: 46px; z-index: 1; font-family: var(--font-display); font-size: var(--fs-h3); color: var(--c-white); }
+
+    @media (max-width: 720px) {
+      .hero { height: clamp(440px, 70vh, 560px); }
+      section { padding-top: 44px; }
+      .grid3 { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .col-tile span { left: 16px; bottom: 24px; }
+      .hero-search input { font-size: 16px; }
+    }
+    @media (max-width: 440px) {
+      .grid3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="store-header">
+    <a class="store-brand" href="/">PEAKPALS</a>
+  </header>
+
+  <!-- Hero: full-bleed lifestyle photo + the AI search entry into /ask -->
+  <section class="hero">
+    <img class="hero-bg" src="/images/site/hero-1.jpg" alt="" />
+    <div class="hero-shade"></div>
+    <h1>The smarter way to<br />discover athleisure.</h1>
+    <p class="sub">Describe what you want. PeakPals finds the right fit.</p>
+    <form class="hero-search" action="/ask" method="get">
+      <img class="person" src="/images/site/icon-person.png" alt="" />
+      <input name="q" placeholder="Build my performance wardrobe" aria-label="Describe what you want" />
+      <button type="submit" aria-label="Ask Pal">
+        <img src="/images/site/icon-arrow-white.svg" alt="" />
+      </button>
+    </form>
+  </section>
+
+  <main class="wrap">
+    <!-- Best Sellers (static, per design) -->
+    <section class="prod">
+      <div class="sec-head">
+        <h2>Best Sellers</h2>
+        <a class="discover-more" href="/ask">Discover more <img src="/images/site/icon-arrow.svg" alt="" /></a>
+      </div>
+      <div class="grid3">
+        <div><div class="tile"><img src="/images/site/best-tee-black.png" alt="Black tee" /></div><div class="name">Lorem Ipsum</div><div class="price">2400</div></div>
+        <div><div class="tile"><img src="/images/site/best-tee-cream.png" alt="Cream tee" /></div><div class="name">Lorem Ipsum</div><div class="price">2400</div></div>
+        <div><div class="tile"><img src="/images/site/best-shorts-black.png" alt="Black shorts" /></div><div class="name">Lorem Ipsum</div><div class="price">2400</div></div>
+      </div>
+    </section>
+
+    <!-- Discover Collections -->
+    <section>
+      <div class="sec-head"><h2>Discover Collections</h2></div>
+      <div class="grid3">
+        <a class="col-tile" href="/ask"><img src="/images/site/col-men.jpg" alt="Men's collection" /><span>Men’s</span></a>
+        <a class="col-tile" href="/ask"><img src="/images/site/col-women-b.jpg" alt="Women's collection" /><span>Women’s</span></a>
+        <a class="col-tile" href="/ask"><img src="/images/site/col-kids.jpg" alt="Kids collection" /><span>Kids</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="store-footer">
+    <div class="wrap">
+      <div class="foot-brand">PEAKPALS</div>
+      <div class="foot-col">
+        <h4>Links</h4>
+        <a href="/">Home</a><a href="/ask">About</a><a href="/product">Gift Card</a><a href="/ask">Membership</a>
+      </div>
+      <div class="foot-col">
+        <h4>Help</h4>
+        <a href="/ask">Payment Options</a><a href="/ask">Customer Service</a><a href="/ask">Privacy Policies</a>
+      </div>
+      <div class="foot-col">
+        <h4>Follow Us</h4>
+        <div class="socials"><img src="/images/site/icon-social.svg" alt="Social links" /></div>
+      </div>
+    </div>
+    <div class="store-rights">All rights reserved</div>
+  </footer>
+</body>
+</html>

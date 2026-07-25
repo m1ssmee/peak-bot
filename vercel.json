@@ -3,7 +3,7 @@
   "outputDirectory": "server/public",
   "functions": {
     "api/index.js": {
-      "includeFiles": "{data/**,server/ask.html,test-store.html}"
+      "includeFiles": "{data/**,server/home.html,server/ask.html,test-store.html}"
     }
   },
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index.js" }]

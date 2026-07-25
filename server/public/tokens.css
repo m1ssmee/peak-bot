@@ -1,0 +1,102 @@
+/* PeakPals design tokens — the single source of truth for the reskin.
+   Extracted from the Figma "Assistant 6" frame. Every page and the widget
+   pull their colours, fonts, spacing and radii from here. */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap');
+
+:root {
+  /* colour */
+  --c-bg: #ffffff;
+  --c-text: #333333;        /* Playfair headings, product name/price */
+  --c-ink: #000000;         /* links, "Discover more", footer nav */
+  --c-muted: #9f9f9f;       /* footer section labels */
+  --c-surface: #f7f7f7;     /* product tiles */
+  --c-line: rgba(0, 0, 0, 0.17);
+  --c-search-border: #d4d4d4;
+  --c-white: #ffffff;
+  --overlay-hero: rgba(0, 0, 0, 0.35);
+  --overlay-tile: rgba(0, 0, 0, 0.40);
+  --fill-search: rgba(255, 255, 255, 0.20);
+  --fill-search-btn: rgba(255, 255, 255, 0.32);
+
+  /* type */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-hero: 64px;
+  --fs-h2: 38px;
+  --fs-h3: 34px;
+  --fs-lg: 24px;
+  --fs-md: 22px;
+  --fs-body: 20px;
+  --fs-sm: 16px;
+
+  /* radius */
+  --radius-pill: 35px;
+  --radius-round: 999px;
+
+  /* layout */
+  --maxw: 1440px;
+  --page-pad: 76px;
+}
+
+/* ---- base + shared store chrome (header / footer) ---- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip; /* belt-and-braces against any horizontal scroll on small screens */
+}
+img { max-width: 100%; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--page-pad); }
+
+/* Header: centred wordmark, matches the design. */
+.store-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 22px 24px;
+  background: var(--c-bg);
+}
+.store-brand {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 26px;
+  letter-spacing: .18em;
+  color: var(--c-ink);
+  text-decoration: none;
+}
+/* nav sits at the right edge without shifting the centred wordmark */
+.store-nav { position: absolute; right: var(--page-pad); display: flex; gap: 22px; }
+.store-nav a {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: .04em;
+  color: var(--c-ink);
+  text-decoration: none;
+}
+.store-nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 5px; }
+
+/* Footer */
+.store-footer { border-top: 1px solid var(--c-line); margin-top: 96px; }
+.store-footer .wrap { display: flex; gap: 40px; padding-top: 48px; padding-bottom: 40px; flex-wrap: wrap; }
+.store-footer .foot-brand { font-family: var(--font-body); font-weight: 500; font-size: 24px; letter-spacing: .18em; color: var(--c-ink); flex: 1 1 240px; }
+.store-footer .foot-col { min-width: 150px; }
+.store-footer .foot-col h4 { margin: 0 0 18px; font-family: var(--font-body); font-weight: 400; font-size: var(--fs-body); color: var(--c-muted); }
+.store-footer .foot-col a { display: block; margin-bottom: 14px; font-family: var(--font-display); font-size: var(--fs-body); color: var(--c-ink); text-decoration: none; }
+.store-footer .foot-col a:hover { text-decoration: underline; }
+.store-footer .socials { display: flex; gap: 16px; margin-top: 4px; }
+.store-footer .socials img { height: 18px; width: auto; }
+.store-rights { font-family: var(--font-display); font-size: var(--fs-sm); color: var(--c-ink); padding: 18px var(--page-pad) 40px; }
+
+@media (max-width: 720px) {
+  :root { --page-pad: 20px; --fs-hero: 34px; --fs-h2: 26px; --fs-h3: 24px; --fs-lg: 18px; --fs-md: 18px; --fs-body: 16px; }
+  .store-nav { position: static; }
+  .store-header { justify-content: space-between; }
+  .store-footer .wrap { gap: 28px; }
+}
