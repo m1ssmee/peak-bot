@@ -104,3 +104,15 @@ img { max-width: 100%; }
   .store-header { justify-content: space-between; }
   .store-footer .wrap { gap: 28px; }
 }
+
+/* ---- cross-document View Transition: home hero bar ⇄ /ask composer ----
+   Both pages link this file, so the opt-in and timing live here once. The two
+   shared-name rules each only match on their own page (.hero-search on home,
+   .pal-form on /ask), so they never collide. */
+@view-transition { navigation: auto; }
+.hero-search, .pal-form { view-transition-name: chat-input; }
+::view-transition-group(chat-input) { animation-duration: 340ms; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 240ms; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 1ms !important; }
+}

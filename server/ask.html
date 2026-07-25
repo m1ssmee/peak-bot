@@ -8,19 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Poppins:wght@300;400;500&display=swap" />
+  <!-- View Transition opt-in + .pal-form's shared name live in tokens.css (linked above),
+       parsed before first paint so the inbound cross-document transition runs. -->
   <link rel="stylesheet" href="/tokens.css" />
-  <style>
-    /* Cross-document View Transition opt-in. Static (not injected by JS) so it is
-       parsed before first paint — required for the inbound transition to run.
-       .pal-form carries the shared name so the home hero bar morphs into it. */
-    @view-transition { navigation: auto; }
-    .pal-form { view-transition-name: chat-input; }
-    ::view-transition-group(chat-input) { animation-duration: 340ms; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
-    ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 240ms; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
-    @media (prefers-reduced-motion: reduce) {
-      ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 1ms !important; }
-    }
-  </style>
 </head>
 <body>
   <!-- Same chrome as the storefront — /ask is a section of the store. -->
