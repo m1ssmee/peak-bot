@@ -123,7 +123,10 @@ Detailed in [peak-bot-status-and-roadmap.md](peak-bot-status-and-roadmap.md); su
 **Phase 1 — launch:** everything in [LAUNCH.md](LAUNCH.md) (real policies, real prices, billing,
 CORS, spend cap). **Phase 2 — near-term conversational features:** streaming, an
 unanswered-questions log, simple analytics, complete-the-look via `pairs_with`, a size-me flow,
-inspo-photo search, in-chat wishlist, Hinglish tuning. **Phase 3 — Shopify commerce:** replace
+inspo-photo search, in-chat wishlist, Hinglish tuning. Phase 2's data (analytics,
+unanswered-questions log, wishlist) persists to **Supabase via Prisma**, set up on the
+maintainer's own account after handover; the **catalogue stays in `products.json` behind
+`catalog.js`** — it does not move to Supabase, to avoid a double migration before Shopify. **Phase 3 — Shopify commerce:** replace
 `catalog.js`'s body with a Storefront adapter (retiring `products.json`), sync + webhooks so stock
 self-updates, auto-enrichment, real cart/checkout, order-status handoff. **Phase 4 — harden:**
 shared-store rate limiting, provider-down behaviour. **Phase 5 — scale:** back-in-stock/price-drop

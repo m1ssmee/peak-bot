@@ -58,6 +58,12 @@ Independent of Shopify — most ship on the current stack. Roughly ordered by le
 - **In-chat wishlist** — save pieces within a conversation to revisit or hand to the cart.
 - **Hinglish tuning** — feed real transcripts back into the system prompt so Pal's register
   matches how shoppers actually type.
+- **Data layer** — analytics, the unanswered-questions log and the wishlist persist to
+  **Supabase** (hosted Postgres) via **Prisma**. Set up by the incoming maintainer on their **own
+  Supabase account** after handover.
+  - **Boundary:** the product **catalogue does not move to Supabase**. Products stay in
+    `products.json` behind `catalog.js` until the Shopify adapter replaces them in Phase 3 — this
+    avoids a double migration (JSON → Postgres → Shopify).
 
 ### Phase 3 — Real commerce (Shopify)
 Swap `catalog.js`'s body for the Shopify Storefront adapter (the reserved slot) and **retire

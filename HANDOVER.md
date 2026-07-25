@@ -96,6 +96,14 @@ Blocking / launch-critical (full detail in [LAUNCH.md](LAUNCH.md)):
       re-running `npm run enrich` (descriptions feed enrichment).
 - [ ] **Re-run the query gauntlet** against the final prompt/persona/`store-info.md` wording.
 
+Phase 2 prerequisite (not launch-blocking):
+
+- [ ] **Supabase project created under the maintainer's account** — Phase 2's data layer
+      (analytics, unanswered-questions log, wishlist) uses Supabase (hosted Postgres) via Prisma.
+      The catalogue stays in `products.json` behind `catalog.js` — it does **not** move to
+      Supabase (avoids a double migration before Shopify). See the
+      [roadmap](peak-bot-status-and-roadmap.md) Phase 2.
+
 Known-good / not blocking:
 
 - Persona rename **Meera → Pal is complete** (swept; no "Meera" remains anywhere).
