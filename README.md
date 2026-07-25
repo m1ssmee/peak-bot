@@ -7,6 +7,9 @@ also built and kept as a *future second door* for embedding on third-party sites
 
 - **Live:** https://peak-bot-beta.vercel.app
 - **Repo:** github.com/m1ssmee/peak-bot (private)
+- **Docs:** [PRD.md](PRD.md) (what/why) · [CLAUDE.md](CLAUDE.md) (conventions) ·
+  [HANDOVER.md](HANDOVER.md) (ops) · [LAUNCH.md](LAUNCH.md) (checklist) ·
+  [roadmap](peak-bot-status-and-roadmap.md)
 - **Design source of truth:** the Figma file
   [Peakpals-Ai](https://www.figma.com/design/Ros5ui315aZPVUjAVQZCZd/Peakpals-Ai). The homepage is
   built from its "Assistant 6" frame; colours, type and spacing were extracted into

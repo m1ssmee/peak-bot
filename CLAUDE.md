@@ -1,8 +1,8 @@
 # CLAUDE.md — conventions for this project
 
 Read this before changing anything. These are load-bearing rules, not style preferences.
-For architecture and how-to-run, see [HANDOVER.md](HANDOVER.md); for what's unfinished, see
-[LAUNCH.md](LAUNCH.md).
+For what the product is, see [PRD.md](PRD.md); for architecture and how-to-run, see
+[HANDOVER.md](HANDOVER.md); for what's unfinished, see [LAUNCH.md](LAUNCH.md).
 
 ## The catalogue has exactly one door
 

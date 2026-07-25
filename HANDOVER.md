@@ -1,8 +1,8 @@
 # HANDOVER
 
 Everything a new maintainer needs to take this over. Companion docs:
-[README.md](README.md) (full detail), [CLAUDE.md](CLAUDE.md) (conventions), [LAUNCH.md](LAUNCH.md)
-(pre-launch checklist).
+[PRD.md](PRD.md) (what/why), [README.md](README.md) (full detail), [CLAUDE.md](CLAUDE.md)
+(conventions), [LAUNCH.md](LAUNCH.md) (pre-launch checklist).
 
 - **Live:** https://peak-bot-beta.vercel.app  ·  **Repo:** github.com/m1ssmee/peak-bot (private)
 - **Design:** Figma [Peakpals-Ai](https://www.figma.com/design/Ros5ui315aZPVUjAVQZCZd/Peakpals-Ai)

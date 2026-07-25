@@ -1,7 +1,8 @@
 # PeakPals AI Stylist — Status & Roadmap
 
-High-level status and where this is headed. For operations see [HANDOVER.md](HANDOVER.md), for
-the launch checklist see [LAUNCH.md](LAUNCH.md), for conventions see [CLAUDE.md](CLAUDE.md).
+High-level status and where this is headed. For what the product is see [PRD.md](PRD.md), for
+operations see [HANDOVER.md](HANDOVER.md), for the launch checklist see [LAUNCH.md](LAUNCH.md),
+for conventions see [CLAUDE.md](CLAUDE.md).
 
 ## Status — as of 2026-07-25
 
