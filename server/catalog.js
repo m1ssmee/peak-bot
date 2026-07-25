@@ -3,8 +3,8 @@ import { fileURLToPath } from 'node:url';
 
 const FILE = fileURLToPath(new URL('../data/products.json', import.meta.url));
 
-// ponytail: re-read the file per call — 12 products, and it means enrich.js writes
-// show up without a restart. Swap for a cache if the catalogue ever gets big.
+// ponytail: re-read the file per call — the catalogue is tiny, and it means enrich.js
+// writes show up without a restart. Swap for a cache if the catalogue ever gets big.
 const all = () => JSON.parse(readFileSync(FILE, 'utf8'));
 
 const has = (arr, wanted) => wanted.some((w) => (arr || []).includes(w));
