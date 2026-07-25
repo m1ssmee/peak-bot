@@ -11,6 +11,9 @@ const PRODUCT_ID = script.getAttribute('data-product-id') || null;
 // Design tokens are redeclared on :host because a shadow root can't see the page's
 // tokens.css. Values match tokens.css. The @import pulls the brand fonts on the host page.
 const shellCss = `
+/* The widget renders in a shadow root on third-party pages, so it loads its own fonts.
+   @font-face/@import always register at document level, so this reaches the shadow tree.
+   Weights match what the widget actually uses: Playfair 400/500, Poppins 300/400/500. */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Poppins:wght@300;400;500&display=swap');
 :host {
   all: initial;

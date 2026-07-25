@@ -1,7 +1,8 @@
 /* PeakPals design tokens — the single source of truth for the reskin.
    Extracted from the Figma "Assistant 6" frame. Every page and the widget
-   pull their colours, fonts, spacing and radii from here. */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap');
+   pull their colours, fonts, spacing and radii from here.
+   Fonts (Playfair Display 400/500, Poppins 300/400/500) are loaded via <link>
+   in each page's <head> — more reliable than an @import nested in this file. */
 
 :root {
   /* colour */
